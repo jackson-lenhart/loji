@@ -1,0 +1,1 @@
+devenv ..\build\loji_win32.exe
