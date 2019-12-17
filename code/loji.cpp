@@ -12,8 +12,14 @@ void test_render_text(offscreen_buffer* buffer, font_buffer* font_bitmaps)
 	int width = font_bitmaps->memory[0].width;
 	int height = font_bitmaps->memory[0].height;
 
-	unsigned char* dest_row = (unsigned char*)buffer->memory + ((buffer->width / 2) * buffer->bytes_per_pixel) + ((buffer->height / 2) * buffer->pitch);
-	unsigned char* source = font_bitmaps->memory[15].memory;
+	// unsigned char* dest_row = (unsigned char*)buffer->memory + ((buffer->width / 2) * buffer->bytes_per_pixel) + ((buffer->height / 2) * buffer->pitch);
+	// unsigned char* source = font_bitmaps->memory[15].memory;
+	
+	// u8 *DestRow = (u8 *)Result.Memory + (Height - 1)*Result.Pitch;
+	
+	unsigned char* dest_row = (unsigned char*)buffer->memory /* + (height - 1) * buffer->pitch */;
+	unsigned char* source = font_bitmaps->memory[0].memory;
+	
 	for (int y = 0; y < height; y++)
 	{
 		unsigned int* dest_pixel = (unsigned int*)dest_row;

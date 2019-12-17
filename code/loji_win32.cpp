@@ -130,11 +130,13 @@ void test_load_arial(float size)
 	fread(ttf_buffer, 1, 1 << 25, fopen("c:/windows/fonts/arialbd.ttf", "rb"));
 	stbtt_InitFont(&font, (unsigned char*)ttf_buffer, stbtt_GetFontOffsetForIndex((unsigned char*)ttf_buffer, 0));
 	
-	int char_bitmap_width = (int)size;
-	int char_bitmap_height = (int)size;
+	// int char_bitmap_width = (int)size;
+	// int char_bitmap_height = (int)size;
 	
-	unsigned int character_memory_size = (char_bitmap_width * char_bitmap_height) * 4 + 8;
-	int font_memory_size = character_memory_size * 52;
+	// unsigned int character_memory_size = ((int)size * (int)size) * 4 /*+ 8*/;
+	// int font_memory_size = character_memory_size * 52;
+	
+	unsigned int font_memory_size = sizeof(character_bitmap) * 52;
 	
 	// font_bitmaps.memory = (character_bitmap*)VirtualAlloc(0, font_memory_size, MEM_COMMIT, PAGE_READWRITE);
 	font_bitmaps.memory = (character_bitmap*)malloc(font_memory_size);
@@ -143,11 +145,11 @@ void test_load_arial(float size)
 	character_bitmap* current_character = font_bitmaps.memory;
 	for (int i = 0; i < 52; i++)
 	{
-		current_character->width = char_bitmap_width;
-		current_character->height = char_bitmap_height;
+		// current_character->width = char_bitmap_width;
+		// current_character->height = char_bitmap_height;
 		
-		current_character->memory = stbtt_GetCodepointBitmap(&font, 0, stbtt_ScaleForPixelHeight(&font, 128.0f), alphabet[i],
-												 &char_bitmap_width, &char_bitmap_height, 0, 0);
+		current_character->memory = stbtt_GetCodepointBitmap(&font, 0, stbtt_ScaleForPixelHeight(&font, size), alphabet[i],
+												 &current_character->width, &current_character->height, 0, 0);
 		current_character++;
 	}
 }
